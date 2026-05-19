@@ -26,9 +26,7 @@ yarn add @crawlertoll/parser
 
 Requires Node 18+ (any runtime with a global `fetch`).
 
-> 📦 Publishing to npm is pending creation of the `@crawlertoll` npm
-> organisation. Until then, install from git:
-> `npm install github:nhrzxxw9dn-web/crawlertoll-parser-js`.
+[![npm](https://img.shields.io/npm/v/%40crawlertoll%2Fparser.svg)](https://www.npmjs.com/package/@crawlertoll/parser) [![license](https://img.shields.io/npm/l/%40crawlertoll%2Fparser.svg)](./LICENSE)
 
 ## Quick start
 
