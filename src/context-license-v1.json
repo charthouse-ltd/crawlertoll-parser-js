@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.crawlertoll.com/context-license/v1.json",
+  "title": "Context License",
+  "description": "Machine-readable metadata file served at /.well-known/context-license.json. See context-license.org for the full specification.",
+  "type": "object",
+  "required": [
+    "version",
+    "publisher",
+    "endpoints",
+    "pricing",
+    "auth",
+    "terms_of_use",
+    "quality_signals"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "Optional JSON Schema URI. v1 documents reference this schema."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Schema version this document conforms to. v1.x documents only."
+    },
+    "publisher": {
+      "type": "object",
+      "required": ["name", "slug", "domain", "contact"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,62}[a-z0-9]$",
+          "description": "URL-safe globally unique publisher identifier."
+        },
+        "domain": {
+          "type": "string",
+          "format": "hostname"
+        },
+        "legal_entity": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "contact": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    },
+    "endpoints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "url", "transport", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "transport": {
+            "type": "string",
+            "enum": ["streamable-http", "stdio", "sse-legacy"]
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 600
+          },
+          "schema_org_types": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "discovery": {
+            "type": "string",
+            "format": "uri-reference"
+          }
+        }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "required": ["model", "currency", "unit_price_micros"],
+      "additionalProperties": false,
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": ["per_query", "per_token", "per_tool_call", "freemium"]
+        },
+        "currency": {
+          "type": "string",
+          "enum": ["USD", "USDC", "GBP", "EUR"]
+        },
+        "unit_price_micros": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Price per unit in micros. 1 micro = 10^-6 unit. Integer-only to avoid float arithmetic."
+        },
+        "included_free": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bulk_tiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["min_qty", "unit_price_micros"],
+            "additionalProperties": false,
+            "properties": {
+              "min_qty": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "unit_price_micros": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "auth": {
+      "type": "object",
+      "required": ["schemes"],
+      "additionalProperties": false,
+      "properties": {
+        "schemes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["anonymous", "api_key", "oauth2", "x402", "skyfire"]
+          }
+        },
+        "rate_limits": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "rpm": { "type": "integer", "minimum": 1 },
+              "rpd": { "type": "integer", "minimum": 1 }
+            }
+          }
+        },
+        "oauth2_metadata_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "terms_of_use": {
+      "type": "string",
+      "format": "uri"
+    },
+    "quality_signals": {
+      "type": "object",
+      "required": ["uptime_sla_pct", "freshness_target_seconds", "last_updated"],
+      "additionalProperties": false,
+      "properties": {
+        "uptime_sla_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "freshness_target_seconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "citation_density_target": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "marketplace_listings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "attestation": {
+      "type": "object",
+      "required": ["public_key_pem", "kid", "algorithm"],
+      "additionalProperties": false,
+      "properties": {
+        "public_key_pem": {
+          "type": "string"
+        },
+        "kid": {
+          "type": "string"
+        },
+        "algorithm": {
+          "type": "string",
+          "enum": ["ed25519"]
+        }
+      }
+    }
+  }
+}
