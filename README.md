@@ -168,8 +168,12 @@ If either group fails, the parser does not ship.
 
 The reference implementation (this parser) is the bar. Pull requests
 welcome at
-[`github.com/nhrzxxw9dn-web/crawlertoll-parser-js`](https://github.com/nhrzxxw9dn-web/crawlertoll-parser-js).
+[`github.com/charthouse-ltd/crawlertoll-parser-js`](https://github.com/charthouse-ltd/crawlertoll-parser-js).
 
 When the `crawlertoll` GitHub organisation is created (per the v0.1
 launch plan), this repo will move to `github.com/crawlertoll/parser-js`.
 The npm name `@crawlertoll/parser` is reserved against that move.
+
+## Trademark
+
+CrawlerToll™ is a trademark of Charthouse Ltd.

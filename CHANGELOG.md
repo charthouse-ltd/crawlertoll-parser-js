@@ -3,6 +3,12 @@
 All notable changes to `@crawlertoll/parser` are documented here.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## v0.1.1 — 2026-05-21
+
+### Changed
+
+- Repository URL updated after the GitHub org rename `nhrzxxw9dn-web` → `charthouse-ltd` (npm scope unchanged: `@crawlertoll/*`). Metadata-only release; no code changes.
+
 ## v0.1.0 — 2026-05-19 (initial)
 
 Initial reference parser for the Context License v1 standard.
